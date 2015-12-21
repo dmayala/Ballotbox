@@ -25,7 +25,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 // JWT setup
-// app.set('jwtTokenSecret', process.env.JWT_SECRET);
+app.set('jwtTokenSecret', process.env.JWT_SECRET);
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -33,22 +33,30 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
 
-// app.use('/api/products', productRoutes);
-// app.use('/api/carts', cartRoutes);
+app.post('/login', async (req, res) => {
+  let { email, pass } = req.body;
+  email = email.toLowerCase();
 
-app.use('/phase1/:id/:pass', async (req, res) => {
-  let UserModel = require('models/user');
-  let { id, pass } = req.params;
+  let UserCollection = require('collections/users');
+  let user = await UserCollection.forge()
+                                 .query({ where: { email } })
+                                 .fetchOne();
 
-  let user = await UserModel.forge({ id }).fetch();
+  if (user) {
+    let check = require('bcrypt').compareSync(pass, user.get('password'));
 
-  let check = require('bcrypt').compareSync(pass, user.get('password'));
-  res.send(check);
+    if (check) {
+      res.send(user);
+    }
+  }
+
+  res.status(500).send({ 'error': 'This username or password is incorrect.' });
 });
 
 app.post('/signup', async (req, res) => {
   let UserModel = require('models/user');
   let { name, email, password } = req.body;
+  email = email.toLowerCase();
 
   let salt = await bcrypt.genSaltAsync(10);
   let hash = await bcrypt.hashAsync(password, salt);

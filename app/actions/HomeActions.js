@@ -5,7 +5,9 @@ class HomeActions {
   constructor() {
     this.generateActions(
       'signupSuccess',
-      'signupFail'
+      'signupFail',
+      'loginSuccess',
+      'loginFail'
     );
   }
 
@@ -15,6 +17,16 @@ class HomeActions {
       this.actions.signupSuccess(result);
     }, (reason) => {
       this.actions.signupFail(reason);
+    });
+    this.alt.resolve(promise);
+  }
+
+  login(details) {
+    let promise = APIUtils.signup(details);
+    promise.then((result) => {
+      this.actions.loginSuccess(result);
+    }, (reason) => {
+      this.actions.loginFail(reason);
     });
     this.alt.resolve(promise);
   }

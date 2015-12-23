@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 import {Navbar, CollapsibleNav, Nav, DropdownButton, MenuItem, NavItem} from 'react-bootstrap';
 
 import SignupModal from 'components/SignupModal';
+import LoginModal from 'components/LoginModal';
 
 if (process.env.BROWSER) {
   require('stylesheets/components/_Header');
@@ -11,11 +12,16 @@ if (process.env.BROWSER) {
 class Header extends React.Component {
 
   state = {
-    showModal: false  
+    showLoginModal: false,
+    showSignupModal: false
   }
 
   toggleSignup = (e) => {
-    this.setState({ showModal: !this.state.showModal });
+    this.setState({ showSignupModal: !this.state.showSignupModal });
+  }
+
+  toggleLogin = (e) => {
+    this.setState({ showLoginModal: !this.state.showLoginModal });
   }
 
   render() {
@@ -27,10 +33,11 @@ class Header extends React.Component {
           </Nav>
           <Nav navbar right>
             <NavItem eventKey={1} href="#" onSelect={this.toggleSignup}>Sign up</NavItem>
-            <NavItem eventKey={2} href="#">Login</NavItem>
+            <NavItem eventKey={2} href="#" onSelect={this.toggleLogin}>Login</NavItem>
           </Nav>
         </CollapsibleNav>
-        <SignupModal {...props} show={this.state.showModal} onHide={this.toggleSignup} />
+        <SignupModal {...props} show={this.state.showSignupModal} onHide={this.toggleSignup} />
+        <LoginModal {...props} show={this.state.showLoginModal} onHide={this.toggleLogin} />
       </Navbar>
     );
   }

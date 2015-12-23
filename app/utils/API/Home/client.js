@@ -20,7 +20,7 @@ export default {
     } catch (err) {
       throw new Error(err);
     }
-  }
+  },
 
   async login(userInfo) {
     try {

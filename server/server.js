@@ -4,17 +4,13 @@ import logger from 'morgan';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 
-import jwt from 'jwt-simple';
-
-// import productRoutes from './routes/products';
-// import cartRoutes from './routes/carts';
-
-import React from 'react';
-import Router from 'react-router';
-import routes from 'routes';
-import Flux from 'utils/flux';
+import jwt_simple from 'jwt-simple';
 
 const bcrypt = require('bluebird').promisifyAll(require('bcrypt'));
+
+import React from 'react';
+import createFlux from 'flux/createFlux';
+import universalRender from '../shared/universalRender';
 
 const app = express();
 
@@ -43,7 +39,7 @@ app.post('/login', async (req, res) => {
                                  .fetchOne();
 
   if (user) {
-    let check = require('bcrypt').compareSync(pass, user.get('password'));
+    let check = await bcrypt.compareAsync(pass, user.get('password'));
 
     if (check) {
       res.send(user);
@@ -64,22 +60,31 @@ app.post('/signup', async (req, res) => {
   let user = await UserModel.forge({ name, email, password: hash }).save();
   res.send(user);
 });
-  
+
 // react router config
-app.use((req, res, next) => {
-  let router = Router.create({ 
-    location: req.url,
-    routes: routes
-  });
-  const flux = new Flux();
-  router.run((Handler, state) => {
-    if (state.routes.length < 1) {
-      return next();  
+app.use(async (req, res, next) => {
+
+  const flux = createFlux();
+
+  try {
+    const { body, title, statusCode, description } = await universalRender({ flux, location: req.url });
+    return res.render('index', { title, html: body });
+  } catch (err) {
+    const { error, redirect } = err;
+    console.log(err);
+    
+    if (error && error.code === 404) {
+      return next();
     }
-    flux.render(Handler, flux).then((content) => {
-      return res.render('index', { html: content.body });
-    }); 
-  });
+
+    if (redirect) {
+      const { pathname, search } = redirect;
+      return res.redirect(pathname + search);
+    }
+
+    return next(error);
+  }
+
 });
 
 // catch 404 and forward to error handler
@@ -112,7 +117,6 @@ app.use((err, req, res, next) => {
     error: {}
   });
 });
-
 
 const server = require('http').createServer(app);
 server.listen(app.get('port'), () => {

@@ -7,10 +7,6 @@ if (process.env.BROWSER) {
 
 class SignupModal extends React.Component {
 
-  static contextTypes = {
-    router: React.PropTypes.func.isRequired
-  }
-
   state = {
     name: null,
     password: null,
@@ -21,7 +17,7 @@ class SignupModal extends React.Component {
     e.preventDefault();
     this.props.flux.actions.HomeActions.signup(this.state);
     this.props.onHide();
-    this.context.router.transitionTo('dashboard');
+    //this.context.router.transitionTo('dashboard');
   }
 
   _onChange = (e) => {

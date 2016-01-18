@@ -1,5 +1,4 @@
 import React from 'react';
-import {RouteHandler} from 'react-router';
 import {Button} from 'react-bootstrap';
 
 if (process.env.BROWSER) {
@@ -20,7 +19,6 @@ class Dashboard extends React.Component {
           </div>
         </header>
         <div className="col-lg-12">
-          <RouteHandler />
         </div>
       </div>
     );

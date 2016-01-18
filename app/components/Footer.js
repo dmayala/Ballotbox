@@ -18,7 +18,7 @@ class Footer extends React.Component {
         "http://expressjs.com/">Express</a>, and <a href=
         "http://postgres.org/">Postgres</a> by <a href="https://www.github.com/dmayala"
         target="_blank">@dmayala</a>.<br />
-        The source code for this application is available in <a href="https://github.com/dmayala/greenhouse" target="_blank">this
+        The source code for this application is available in <a href="https://github.com/dmayala/ballotbox" target="_blank">this
         repository</a> on GitHub.</p>
       </footer>
     );

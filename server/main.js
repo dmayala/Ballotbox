@@ -7,8 +7,10 @@ delete process.env.BROWSER;
 // Tell `require` calls to look into `/app` also
 // it will avoid `../../../../../` require strings
 const modulePath = require('app-module-path');
-modulePath.addPath(__dirname + '/entities');
 modulePath.addPath(__dirname + '/../app');
+modulePath.addPath(__dirname + '/../shared');
+modulePath.addPath(__dirname + '/entities');
 
 // Start the server
 require('./server.js');
+

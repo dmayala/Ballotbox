@@ -27,6 +27,6 @@ module.exports = {
   ],
   resolve: {
     extensions: ['', '.react.js', '.js', '.json', '.jsx', '.es6', '.babel', '.scss' ],
-    modulesDirectories: ['node_modules', 'app' ]
+    modulesDirectories: ['node_modules', 'app', 'shared' ]
   }
 };

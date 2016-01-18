@@ -3,10 +3,6 @@ import { Modal, Input, Button } from 'react-bootstrap';
 
 class LoginModal extends React.Component {
 
-  static contextTypes = {
-    router: React.PropTypes.func.isRequired
-  }
-
   state = {
     email: null,
     password: null
@@ -16,7 +12,7 @@ class LoginModal extends React.Component {
     e.preventDefault();
     this.props.flux.actions.HomeActions.login(this.state);
     this.props.onHide();
-    this.context.router.transitionTo('dashboard');
+    //this.context.router.transitionTo('dashboard');
   }
 
   _onChange = (e) => {

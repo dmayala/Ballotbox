@@ -10,10 +10,34 @@ if (process.env.BROWSER) {
 
 class Home extends React.Component {
 
-  state = { showModal: false }
+  static contextTypes = { 
+    flux: React.PropTypes.object.isRequired,
+  }
+
+  state = this.getState();
+
+  getState() {
+    return this.context.flux.getStore('home')
+                            .getState();
+  }
+
+  componentDidMount() {
+    this.context.flux.getStore('home')
+                     .listen(this._onChange);
+  }
+
+  componentWillUnmount() {
+    var store = this.context.flux.getStore('home');
+    store.unlisten(this._onChange);
+    this.context.flux.recycle(store);
+  }
+
+  _onChange = () => {
+    this.setState(this.getState());
+  }
 
   toggleSignup = () => {
-    this.setState({ showModal: !this.state.showModal });
+    this.context.flux.getActions('home').toggleSignup();
   }
 
   render() {

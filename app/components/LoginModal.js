@@ -3,14 +3,18 @@ import { Modal, Input, Button } from 'react-bootstrap';
 
 class LoginModal extends React.Component {
 
+  static contextTypes = { 
+    flux: React.PropTypes.object.isRequired,
+  }
+
   state = {
     email: null,
     password: null
   }
-  
+
   _onSave = (e) => {
     e.preventDefault();
-    this.props.flux.actions.HomeActions.login(this.state);
+    this.context.flux.getActions('home').login(this.state);
     this.props.onHide();
     //this.context.router.transitionTo('dashboard');
   }
@@ -39,7 +43,7 @@ class LoginModal extends React.Component {
 
         <Modal.Footer>
           <Button onClick={this.props.onHide}>Close</Button>
-          <Button onClick={this._onSave} bsStyle="primary">Sign up</Button>
+          <Button onClick={this._onSave} bsStyle="primary">Login</Button>
         </Modal.Footer>
       </Modal>
     );

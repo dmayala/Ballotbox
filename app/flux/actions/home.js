@@ -4,6 +4,7 @@ class HomeActions {
 
   constructor() {
     this.generateActions(
+      'toggleSignup',
       'signupSuccess',
       'signupFail',
       'loginSuccess',
@@ -12,25 +13,31 @@ class HomeActions {
   }
 
   signup(details) {
-    let promise = APIUtils.signup(details);
-    promise.then((result) => {
-      this.actions.signupSuccess(result);
-    }, (reason) => {
-      this.actions.signupFail(reason);
-    });
-    this.alt.resolve(promise);
+    return (dispatch, alt) =>
+      alt.resolve(async () => {
+        try {
+          const response = await APIUtils.signup(details);
+          if (response.error) {
+            return this.actions.signupFail(response);
+          }
+          this.actions.signupSuccess(response);
+        } catch (error) {
+          this.actions.signupFail({ error });
+        }
+      });
   }
 
   login(details) {
-    let promise = APIUtils.signup(details);
-    promise.then((result) => {
-      this.actions.loginSuccess(result);
-    }, (reason) => {
-      this.actions.loginFail(reason);
-    });
-    this.alt.resolve(promise);
+    return (dispatch, alt) =>
+      alt.resolve(async () => {
+        try {
+          const response = await APIUtils.login(details);
+          this.actions.loginSuccess(response);
+        } catch (error) {
+          this.actions.loginFail({ error });
+        }
+      });
   }
-
 }
 
 export default HomeActions; 

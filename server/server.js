@@ -12,6 +12,9 @@ import React from 'react';
 import createFlux from 'flux/createFlux';
 import universalRender from '../shared/universalRender';
 
+import UserModel from 'models/user';
+import UserCollection from 'collections/users';
+
 const app = express();
 
 app.set('port', process.env.PORT || 3000);
@@ -33,7 +36,6 @@ app.post('/login', async (req, res) => {
   let { email, pass } = req.body;
   email = email.toLowerCase();
 
-  let UserCollection = require('collections/users');
   let user = await UserCollection.forge()
                                  .query({ where: { email } })
                                  .fetchOne();
@@ -51,15 +53,22 @@ app.post('/login', async (req, res) => {
 });
 
 app.post('/signup', async (req, res) => {
-  let UserModel = require('models/user');
   let { name, email, password } = req.body;
   email = email.toLowerCase();
 
-  let salt = await bcrypt.genSaltAsync(10);
-  let hash = await bcrypt.hashAsync(password, salt);
+  let user = await UserCollection.forge()
+                                 .query({ where: { email } })
+                                 .fetchOne();
 
-  let user = await UserModel.forge({ name, email, password: hash }).save();
-  res.send(user);
+  if (!user) {
+    let salt = await bcrypt.genSaltAsync(10);
+    let hash = await bcrypt.hashAsync(password, salt);
+
+    let user = await UserModel.forge({ name, email, password: hash }).save();
+    res.send(user);
+  }
+
+  res.status(500).send({ 'error': 'This email is already registered.' });
 });
 
 // react router config

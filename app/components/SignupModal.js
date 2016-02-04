@@ -11,26 +11,49 @@ class SignupModal extends React.Component {
     flux: React.PropTypes.object.isRequired,
   }
 
-  state = {
-    name: null,
-    password: null,
-    email: null
-  }
-  
-  _onSave = (e) => {
-    e.preventDefault();
-    this.context.flux.getActions('home').signup(this.state);
-    // this.props.onHide();
-    //this.context.router.transitionTo('dashboard');
+  state = this.getState();
+
+  getState() {
+    return this.context.flux.getStore('signupModal')
+                            .getState();
   }
 
-  _onChange = (e) => {
-    let state = Object.assign({}, this.state);
-    state[e.target.name] = e.target.value; 
-    this.setState(state);
+  componentDidMount() {
+    this.context.flux.getStore('signupModal')
+                     .listen(this._onChange);
+  }
+
+  componentWillUnmount() {
+    var store = this.context.flux.getStore('signupModal');
+    store.unlisten(this._onChange);
+    this.context.flux.recycle(store);
+  }
+
+  _onChange = () => {
+    this.setState(this.getState());
+  }
+
+  _onSave = (e) => {
+    e.preventDefault();
+    let { name, email, password } = this.state;
+    let actions = this.context.flux.getActions('signupModal');
+    
+    if(!name.trim()) {
+      actions.invalidName();
+      this.refs.nameTextField.getInputDOMNode().focus();
+    }
+
+    if(!email.trim()) {
+      //actions.invalidEmail();
+      //this.refs.nameTextField.getInputDOMNode().focus();
+    }
+
+    // Remove temporarily
+    // this.context.flux.getActions('home').signup(this.state);
   }
 
   render() {
+    let actions = this.context.flux.getActions('signupModal');
     return (
       <Modal show={this.props.show} onHide={this.props.onHide}>
         <Modal.Header>
@@ -39,12 +62,13 @@ class SignupModal extends React.Component {
 
         <Modal.Body>
           <form ref="signupForm">
-            <Input label="Name" name="name" type="text" value={this.state.name}
-            onChange={this._onChange} /> 
+            <Input ref="nameTextField" bsStyle={this.state.nameValidationState}
+            help={this.state.helpBlock} label="Name" name="name" type="text" value={this.state.name}
+            onChange={actions.updateName} />
             <Input label="Email" name="email" type="text" value={this.state.email}
-            onChange={this._onChange} /> 
+            onChange={actions.updateEmail} /> 
             <Input label="Password" name="password" type="password" value={this.state.password}
-            onChange={this._onChange} /> 
+            onChange={actions.updatePassword} /> 
           </form>
         </Modal.Body>
 

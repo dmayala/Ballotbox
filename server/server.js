@@ -65,7 +65,7 @@ app.post('/signup', async (req, res) => {
     let hash = await bcrypt.hashAsync(password, salt);
 
     let user = await UserModel.forge({ name, email, password: hash }).save();
-    res.send(user);
+    return res.send(user);
   }
 
   res.status(500).send({ 'error': 'This email is already registered.' });

@@ -13,20 +13,20 @@ class Header extends React.Component {
 
   static contextTypes = { 
     flux: React.PropTypes.object.isRequired,
-  }
+  };
 
   state = {
     showLoginModal: false,
     showSignupModal: false
-  }
+  };
 
   toggleSignup = (e) => {
     this.setState({ showSignupModal: !this.state.showSignupModal });
-  }
+  };
 
   toggleLogin = (e) => {
     this.setState({ showLoginModal: !this.state.showLoginModal });
-  }
+  };
 
   render() {
     const props = Object.assign({}, this.state, this.props);

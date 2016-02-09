@@ -38,7 +38,7 @@ export default async function({ flux, history, location, container }) {
     const { initialState } = await bootstrap();
     flux.bootstrap(initialState);
 
-    const routes = require('routes');
+    const routes = require('routes').default;
 
     const element = (
       <AltContainer history={ history } flux={ flux }>
@@ -55,7 +55,7 @@ export default async function({ flux, history, location, container }) {
     // next promises will be resolved
     flux.resolver.firstRender = false;
   } else {
-    const routes = require('routes')(flux);
+    const routes = require('routes').default(flux);
     const { error, redirect, renderProps } = await runRouter(location, routes);
 
     if (error || redirect) throw ({ error, redirect });

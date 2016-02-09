@@ -12,7 +12,7 @@ class Home extends React.Component {
 
   static contextTypes = { 
     flux: React.PropTypes.object.isRequired,
-  }
+  };
 
   state = this.getState();
 
@@ -34,11 +34,11 @@ class Home extends React.Component {
 
   _onChange = () => {
     this.setState(this.getState());
-  }
+  };
 
   toggleSignup = () => {
     this.context.flux.getActions('home').toggleSignup();
-  }
+  };
 
   render() {
     const props = Object.assign({}, this.state, this.props);

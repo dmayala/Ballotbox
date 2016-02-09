@@ -7,7 +7,7 @@ class HomeStore {
   onSignupSuccess(response) {
     this.showModal = false;
     if (process.env.BROWSER) {
-      const history = require('utils/routerHistory');
+      const history = require('utils/routerHistory').default;
       const [ , nextPath = '/dashboard' ] = window
         .location.search.match(/\?redirect=(.+)$/) || [];
       return history.replaceState(null, nextPath);

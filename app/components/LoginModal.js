@@ -5,25 +5,25 @@ class LoginModal extends React.Component {
 
   static contextTypes = { 
     flux: React.PropTypes.object.isRequired,
-  }
+  };
 
   state = {
     email: null,
     password: null
-  }
+  };
 
   _onSave = (e) => {
     e.preventDefault();
     this.context.flux.getActions('home').login(this.state);
     this.props.onHide();
     //this.context.router.transitionTo('dashboard');
-  }
+  };
 
   _onChange = (e) => {
     let state = Object.assign({}, this.state);
     state[e.target.name] = e.target.value; 
     this.setState(state);
-  }
+  };
 
   render() {
     return (

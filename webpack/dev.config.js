@@ -7,6 +7,7 @@ const config = Object.assign({}, baseConfig, {
   devtool: 'eval-source-map',
   entry: {
     app: [
+      'babel-polyfill',
       `webpack-dev-server/client?http://localhost:3001`,
       'webpack/hot/only-dev-server',
       './app/app.js'
@@ -34,7 +35,10 @@ config.module.loaders = config.module.loaders.concat([
 
 // add `react-hot` on JS files
 delete config.module.loaders[1].loader;
-config.module.loaders[1].loaders = [ 'react-hot', 'babel?optional[]=runtime&stage=0' ]
+config.module.loaders[1].loaders = [ 
+  'react-hot',
+  'babel-loader'
+];
 
 config.plugins = [
   // hot reload
@@ -52,7 +56,9 @@ config.plugins = [
   new webpack.optimize.OccurenceOrderPlugin()
 ].concat(config.plugins).concat([
   function() {
-    this.plugin('done', startExpress);
+    this.plugin('done', function () {
+      startExpress();
+    });
   }
 ]);
 

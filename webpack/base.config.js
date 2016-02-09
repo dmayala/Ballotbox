@@ -1,13 +1,14 @@
-var path = require('path');
-var writeStats = require('./utils/writeStats');
+import path from 'path';
+import writeStats from './utils/writeStats';
 
-var JS_REGEX = /\.js$|\.jsx$|\.es6$|\.babel$/;
+const JS_REGEX = /\.js$|\.jsx$|\.es6$|\.babel$/;
 
 module.exports = {
   devtool: 'source-map',
-  entry: {
-    app: './app/app.js'
-  },
+  entry: [
+    'babel-polyfill',
+    './app/app.js'
+  ],
   output: {
     path: path.resolve(__dirname, '..', 'public'),
     filename: 'js/app.js',
@@ -16,7 +17,11 @@ module.exports = {
   module: {
     loaders: [
       {test: /\.json$/, exclude: /node_modules/, loader: 'json'},
-      {test: JS_REGEX, exclude: /node_modules/, loader: 'babel?optional[]=runtime&stage=0'},
+      {
+        test: JS_REGEX,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      },
       {test: /\.(png|woff|woff2|eot|ttf|svg)$/, exclude: /(node_modules|bower_components)/, loader: 'url-loader?limit=100000'}
     ],
   },

@@ -7,11 +7,11 @@ if (process.env.BROWSER) {
 }
 
 class MainApp extends React.Component {
-  static propTypes = { children: React.PropTypes.element }
+  static propTypes = { children: React.PropTypes.element };
   static contextTypes = { 
     flux: React.PropTypes.object.isRequired,
     history: React.PropTypes.object.isRequired
-  }
+  };
 
   render() {
     const { children } = this.props;

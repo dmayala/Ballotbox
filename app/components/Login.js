@@ -5,7 +5,7 @@ class Login extends React.Component {
 
   static contextTypes = { 
     flux: React.PropTypes.object.isRequired
-  }
+  };
 
   state = {
     username: '',
@@ -15,14 +15,13 @@ class Login extends React.Component {
   _onLogin = (e) => {
     e.preventDefault();
     this.context.flux.getActions('login').loginUser(this.state);
-  }
+  };
 
   _onChange = (e) => {
     let state = Object.assign({}, this.state);
     state[e.target.name] = e.target.value; 
     this.setState(state);
-  }
-
+  };
 
   render() {
     return (

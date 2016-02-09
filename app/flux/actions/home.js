@@ -1,4 +1,4 @@
-const APIUtils = require(`API/Home/${ process.env.BROWSER ? 'client' : 'server' }`)
+const APIUtils = require(`API/Home/${ process.env.BROWSER ? 'client' : 'server' }`).default;
 
 class HomeActions { 
 

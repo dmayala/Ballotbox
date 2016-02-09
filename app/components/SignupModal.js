@@ -10,7 +10,7 @@ class SignupModal extends React.Component {
 
   static contextTypes = { 
     flux: React.PropTypes.object.isRequired,
-  }
+  };
 
   state = this.getState();
 
@@ -32,7 +32,7 @@ class SignupModal extends React.Component {
 
   _onChange = () => {
     this.setState(this.getState());
-  }
+  };
 
   _onSave = (e) => {
     e.preventDefault();
@@ -59,7 +59,7 @@ class SignupModal extends React.Component {
     if (isValid) {
       this.context.flux.getActions('home').signup(this.state);
     }
-  }
+  };
 
   render() {
     let actions = this.context.flux.getActions('signupModal');

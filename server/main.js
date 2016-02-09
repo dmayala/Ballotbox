@@ -1,5 +1,5 @@
 require('dotenv').load();
-require('babel/register')({ stage: 0 });
+//require('babel-register')({ stage: 0 });
 // Delete the `BROWSER` env variable if it's present
 // https://github.com/iam4x/isomorphic-flux-boilerplate/issues/16
 delete process.env.BROWSER;

@@ -29,7 +29,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
-        loaders: [ 'babel?optional[]=runtime&stage=0' ]
+        loader: 'babel-loader'
       },
       {
         test: /.(png|woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]+)?$/,

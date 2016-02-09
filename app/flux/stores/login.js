@@ -11,7 +11,7 @@ class LoginStore {
     this._jwt = jwt.token;
     this._user = jwt_decode(this._jwt).user;
     if (process.env.BROWSER) {
-      const history = require('utils/routerHistory');
+      const history = require('utils/routerHistory').default;
       const [ , nextPath = '/dashboard' ] = window
         .location.search.match(/\?redirect=(.+)$/) || [];
       return history.replaceState(null, nextPath);
@@ -22,7 +22,7 @@ class LoginStore {
     this._jwt = null;
     this._user = null;
     if (process.env.BROWSER) {
-      const history = require('utils/routerHistory');
+      const history = require('utils/routerHistory').default;
       return history.pushState(null, '/');
     }
   }

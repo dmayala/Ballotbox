@@ -12,14 +12,6 @@ export default function (flux) {
   return (
     <Route component={MainApp}>
       <Route path="/" component={Home} />
-    </Route>
-  );
-}
-
-export default function (flux) {
-  return (
-    <Route component={MainApp}>
-      <Route path="/" component={Home} />
       <Route path="dashboard" onEnter={isConnected(flux)}>
         <IndexRoute component={Dashboard} />
       </Route>

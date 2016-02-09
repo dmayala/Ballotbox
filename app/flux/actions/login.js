@@ -1,5 +1,5 @@
 import cookie from 'react-cookie';
-const APIUtils = require(`../../../shared/API/Login/${ process.env.BROWSER ? 'client' : 'server' }`)
+const APIUtils = require(`../../../shared/API/Login/${ process.env.BROWSER ? 'client' : 'server' }`).default;
 
 class LoginActions { 
 

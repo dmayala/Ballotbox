@@ -50,7 +50,7 @@ class SignupModal extends React.Component {
       actions.invalidEmail();
     }
 
-    let r = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/);
+    let r = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
     if(!r.test(password.trim())) {
       isValid = false;
       actions.invalidPassword();

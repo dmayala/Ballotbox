@@ -45,7 +45,7 @@ app.post('/login', async (req, res) => {
     let check = await bcrypt.compareAsync(password, user.get('password'));
 
     if (check) {
-      let token = jwt_simple.encode({ user: user.get('email') }, process.env.JWT_SECRET);
+      let token = jwt_simple.encode({ user: user.get('email'), name: user.get('name') }, process.env.JWT_SECRET);
       return res.send({ token });
     }
   }

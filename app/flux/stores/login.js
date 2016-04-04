@@ -5,11 +5,13 @@ class LoginStore {
     this.bindActions(this.alt.getActions('login'));
     this._user = null;
     this._jwt = null;
+    this._name = null;
   }
 
   onLoginUserSuccess(jwt) {
     this._jwt = jwt.token;
     this._user = jwt_decode(this._jwt).user;
+    this._name = jwt_decode(this._jwt).name;
     if (process.env.BROWSER) {
       const history = require('utils/routerHistory').default;
       const [ , nextPath = '/dashboard' ] = window
@@ -21,6 +23,7 @@ class LoginStore {
   onLogoutUserSuccess() {
     this._jwt = null;
     this._user = null;
+    this._name = null;
     if (process.env.BROWSER) {
       const history = require('utils/routerHistory').default;
       return history.pushState(null, '/');

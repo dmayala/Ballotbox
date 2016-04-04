@@ -13,7 +13,7 @@ class Footer extends React.Component {
 
         <p>Built as a sample application with <a href=
         "https://facebook.github.io/react/">React</a>, <a href=
-        "http://twitter.github.com/bootstrap/">Twitter Bootstrap</a>, <a href=
+        "http://getbootstrap.com/">Twitter Bootstrap</a>, <a href=
         "http://nodejs.org/">Node.js</a>, <a href=
         "http://expressjs.com/">Express</a>, and <a href=
         "http://postgres.org/">Postgres</a> by <a href="https://www.github.com/dmayala"

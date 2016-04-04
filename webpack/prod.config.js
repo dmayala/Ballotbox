@@ -43,6 +43,28 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin('css/app.css'),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+        screw_ie8: true,
+        sequences: true,
+        dead_code: true,
+        drop_debugger: true,
+        comparisons: true,
+        conditionals: true,
+        evaluate: true,
+        booleans: true,
+        loops: true,
+        hoist_funs: true,
+        if_return: true,
+        join_vars: true,
+        cascade: true,
+        drop_console: true
+      },
+      output: {
+        comments: false
+      }
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         BROWSER: JSON.stringify(true)

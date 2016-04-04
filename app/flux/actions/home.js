@@ -6,9 +6,7 @@ class HomeActions {
     this.generateActions(
       'toggleSignup',
       'signupSuccess',
-      'signupFail',
-      'loginSuccess',
-      'loginFail'
+      'signupFail'
     );
   }
 
@@ -23,18 +21,6 @@ class HomeActions {
           this.actions.signupSuccess(response);
         } catch (error) {
           this.actions.signupFail({ error });
-        }
-      });
-  }
-
-  login(details) {
-    return (dispatch, alt) =>
-      alt.resolve(async () => {
-        try {
-          const response = await APIUtils.login(details);
-          this.actions.loginSuccess(response);
-        } catch (error) {
-          this.actions.loginFail({ error });
         }
       });
   }

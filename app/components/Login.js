@@ -8,7 +8,7 @@ class Login extends React.Component {
   };
 
   state = {
-    username: '',
+    email: '',
     password: ''
   };
 
@@ -28,7 +28,7 @@ class Login extends React.Component {
       <div className="container">
         <h2>Log In</h2>
         <form ref="loginForm">
-          <Input label="Username" name="username" type="text" value={this.state.username}
+          <Input label="Username" name="email" type="text" value={this.state.email}
           onChange={this._onChange} /> 
           <Input label="Password" name="password" type="password" value={this.state.password}
           onChange={this._onChange} /> 

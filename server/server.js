@@ -9,6 +9,7 @@ import jwt_simple from 'jwt-simple';
 const bcrypt = require('bluebird').promisifyAll(require('bcrypt'));
 
 import React from 'react';
+import reactCookie from 'react-cookie';
 import createFlux from 'flux/createFlux';
 import universalRender from '../shared/universalRender';
 
@@ -44,7 +45,7 @@ app.post('/login', async (req, res) => {
     let check = await bcrypt.compareAsync(password, user.get('password'));
 
     if (check) {
-      let token = jwt_simple.encode({ user: user.get('username') }, process.env.JWT_SECRET);
+      let token = jwt_simple.encode({ user: user.get('email') }, process.env.JWT_SECRET);
       return res.send({ token });
     }
   }
@@ -74,9 +75,17 @@ app.post('/signup', async (req, res) => {
 // react router config
 app.use(async (req, res, next) => {
 
+  let { jwt } = req.cookies;
   const flux = createFlux();
 
+  if (jwt) {
+    flux.getActions('login').loadUser({ token: jwt });
+  } 
+  
+  await flux.resolver.dispatchPendingActions();
+
   try {
+    reactCookie.plugToRequest(req, res);
     const { body, title, statusCode, description } = await universalRender({ flux, location: req.url });
     return res.render('index', { title, html: body });
   } catch (err) {

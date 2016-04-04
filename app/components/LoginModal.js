@@ -14,7 +14,7 @@ class LoginModal extends React.Component {
 
   _onSave = (e) => {
     e.preventDefault();
-    this.context.flux.getActions('home').login(this.state);
+    this.context.flux.getActions('login').loginUser(this.state);
     this.props.onHide();
     //this.context.router.transitionTo('dashboard');
   };

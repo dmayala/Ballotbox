@@ -33,7 +33,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.post('/login', async (req, res) => {
-  let { email, pass } = req.body;
+  let { email, password } = req.body;
   email = email.toLowerCase();
 
   let user = await UserCollection.forge()
@@ -41,7 +41,7 @@ app.post('/login', async (req, res) => {
                                  .fetchOne();
 
   if (user) {
-    let check = await bcrypt.compareAsync(pass, user.get('password'));
+    let check = await bcrypt.compareAsync(password, user.get('password'));
 
     if (check) {
       let token = jwt_simple.encode({ user: user.get('username') }, process.env.JWT_SECRET);

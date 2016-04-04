@@ -1,12 +1,17 @@
 class SignupModalStore {
   constructor() {
     this.bindActions(this.alt.getActions('signupModal'));
+    this.bindActions(this.alt.getActions('home'));
     this.name = '';
     this.password = '';
     this.email = '';
     this.nameValidation = { state: null, helpBlock: '' };
     this.passwordValidation = { state: null, helpBlock: '' };
     this.emailValidation = { state: null, helpBlock: '' };
+  }
+
+  onSignupFail(error) {
+    this.emailValidation = { state: 'error', helpBlock: 'This email is already registered' };
   }
 
   onUpdateName(e) {

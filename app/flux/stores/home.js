@@ -14,10 +14,6 @@ class HomeStore {
     }
   }
 
-  onSignupFail(error) {
-    console.log(error);
-  }
-
   onToggleSignup() {
     this.showModal = !this.showModal;
   }

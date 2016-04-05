@@ -6,6 +6,8 @@ import cookieParser from 'cookie-parser';
 
 import jwt_simple from 'jwt-simple';
 
+import pollRoutes from './routes/polls';
+
 const bcrypt = require('bluebird').promisifyAll(require('bcrypt'));
 
 import React from 'react';
@@ -32,6 +34,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
+
+app.use('/api/polls', pollRoutes);
 
 app.post('/login', async (req, res) => {
   let { email, password } = req.body;

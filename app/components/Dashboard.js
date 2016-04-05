@@ -15,6 +15,7 @@ class Dashboard extends React.Component {
             <h1>Dashboard</h1>
             <p className="lead">What would you like to do today?</p>
             <Button bsStyle="success" bsSize="large">New Poll</Button>
+            { ' ' }
             <Button bsStyle="primary" bsSize="large">My Polls</Button>
           </div>
         </header>

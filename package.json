@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node --harmony ./server/main.js",
+    "start": "node ./server/main.js",
     "build": "webpack --progress --stats --config ./webpack/prod.config.js",
     "dev": "babel-node ./webpack/dev.server.js",
     "postinstall": "npm run build"

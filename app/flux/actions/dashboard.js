@@ -1,4 +1,4 @@
-const APIUtils = require(`../../../shared/API/Dashboard/${ process.env.BROWSER ? 'client' : 'server' }`)
+const APIUtils = require(`../../../shared/API/Dashboard/${ process.env.BROWSER ? 'client' : 'server' }`).default;
 
 class DashboardActions { 
 

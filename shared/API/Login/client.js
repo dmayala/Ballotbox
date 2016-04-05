@@ -1,6 +1,3 @@
-import 'babel-polyfill';
-import 'whatwg-fetch';
-
 export default {
   async login(userinfo) {
     try {

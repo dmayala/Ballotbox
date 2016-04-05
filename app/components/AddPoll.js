@@ -89,7 +89,7 @@ export default AuthenticatedComponent(class AddPoll extends React.Component {
     });
 
     return (
-      <div className="container" id="dashboard">
+      <div>
 
         { this.state.success ? (
           <Alert bsStyle="success">

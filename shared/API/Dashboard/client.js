@@ -1,6 +1,3 @@
-import 'babel/polyfill';
-import 'whatwg-fetch';
-
 import cookie from 'react-cookie';
 
 export default {

@@ -1,4 +1,5 @@
 import React from 'react';
+import {LinkContainer} from 'react-router-bootstrap';
 import {Button} from 'react-bootstrap';
 
 if (process.env.BROWSER) {
@@ -14,12 +15,17 @@ class Dashboard extends React.Component {
           <div className="container">
             <h1>Dashboard</h1>
             <p className="lead">What would you like to do today?</p>
-            <Button bsStyle="success" bsSize="large">New Poll</Button>
+            <LinkContainer to="dashboard/new">
+              <Button bsStyle="success" bsSize="large">New Poll</Button>
+            </LinkContainer>
             { ' ' }
-            <Button bsStyle="primary" bsSize="large">My Polls</Button>
+            <LinkContainer to="dashboard/polls">
+              <Button bsStyle="primary" bsSize="large">My Polls</Button>
+            </LinkContainer>
           </div>
         </header>
         <div className="col-lg-12">
+          { this.props.children }
         </div>
       </div>
     );

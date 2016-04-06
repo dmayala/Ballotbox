@@ -20,7 +20,8 @@ router.get('/', async (req, res, next) => {
                                      .fetchOne();
       let polls = await PollCollection.forge()
                                       .query({ where: { user_id: user.get('id') } })
-                                      .fetch();
+                                      .fetch({ withRelated: [ 'choices.votes' ]});
+
       return res.send(polls);
     }
     return res.status(500).send({ 'error': 'An error has occurred' });

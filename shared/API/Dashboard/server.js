@@ -1,4 +1,4 @@
-import db from 'models/poll';
+import Poll from 'models/poll';
 
 export default {
 

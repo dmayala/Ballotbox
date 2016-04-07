@@ -5,7 +5,9 @@ export default class MyPollsActions {
   constructor() {
     this.generateActions(
       'getPollsSuccess',
-      'getPollsFail'
+      'getPollsFail',
+      'removePollSuccess',
+      'removePollFail'
     );
   }
 
@@ -17,8 +19,19 @@ export default class MyPollsActions {
           const response = await APIUtils.getPolls(jwt);
           this.actions.getPollsSuccess(response);
         } catch (error) {
-          console.log(error);
           this.actions.getPollsFail({ error });
+        }
+      });
+  }
+
+  removePoll(pollId) {
+    return (dispatch, alt) => 
+      alt.resolve(async () => {
+        try {
+          const response = await APIUtils.removePoll(pollId);
+          this.actions.removePollSuccess({ pollId, response });
+        } catch (error) {
+          this.actions.removePollFail({ error });
         }
       });
   }

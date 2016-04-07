@@ -69,7 +69,9 @@ class Header extends React.Component {
 
   _loggedInNav = () => {
       return [
-        (<Navbar.Text key={1} eventKey={1}>Hello, { this.state.name }!</Navbar.Text>),
+        (<LinkContainer key={1} to="dashboard">
+          <NavItem eventKey={1}>Dashboard</NavItem>
+        </LinkContainer>),
         (<LinkContainer key={2} to="settings">
           <NavItem eventKey={2}>Settings</NavItem>
         </LinkContainer>),

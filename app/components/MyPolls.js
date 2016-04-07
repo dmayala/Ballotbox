@@ -1,6 +1,6 @@
 import React from 'react';
 import AuthenticatedComponent from 'components/AuthenticatedComponent';
-import {Input, Button, Glyphicon, Alert, Accordion, Panel} from 'react-bootstrap';
+import {Input, Button, Glyphicon, Accordion, Panel, Modal} from 'react-bootstrap';
 import {sortBy} from 'lodash';
 
 export default AuthenticatedComponent(class MyPolls extends React.Component {
@@ -19,7 +19,8 @@ export default AuthenticatedComponent(class MyPolls extends React.Component {
 
     return {
       polls: myPollsState.polls,
-      searchTerm: '' 
+      searchTerm: '',
+      showModal: false
     };
   }
 
@@ -48,6 +49,16 @@ export default AuthenticatedComponent(class MyPolls extends React.Component {
     this.setState(state);
   }
 
+  _openModal = (pollId) => {
+    this.setState(Object.assign(this.state, { showModal: true, removePollId: pollId }));
+  }
+
+  _removePoll = () => {
+    this.setState(Object.assign(this.state, { showModal: false }));
+    this.context.flux.getActions('myPolls')
+                     .removePoll(this.state.removePollId);
+  }
+
   render() {
     let polls = this.state.polls.filter((poll) => {
       return poll.name.toLowerCase().indexOf(this.state.searchTerm) !== -1;
@@ -58,8 +69,17 @@ export default AuthenticatedComponent(class MyPolls extends React.Component {
         ); 
       });
 
+      let title = (
+        <div className="clearfix">
+          {poll.name} 
+          <Button onClick={(e) => { e.stopPropagation(); this._openModal(poll.id) }} className="pull-right" bsStyle="danger" bsSize="xsmall">
+            <Glyphicon glyph="trash" />
+          </Button>
+        </div>
+      );
+
       return (
-        <Panel href="#" key={poll.id} eventKey={poll.id} header={poll.name}>
+        <Panel href="#" key={poll.id} eventKey={poll.id} header={title}>
           <ul>
             { choices }
           </ul>
@@ -67,13 +87,27 @@ export default AuthenticatedComponent(class MyPolls extends React.Component {
       ); 
     });
 
+    let close = () => this.setState(Object.assign(this.state, { showModal: false }));
+
     return (
-      <div className="container" id="results">
-        <h2>Results</h2>       
+      <div id="myPolls">
+        <h2>My Polls</h2>       
           <Input ref="resultSearch" onChange={this._handleSearch}name="search" type="text" placeholder="Search for polls" /> 
           <Accordion>
             { polls }
           </Accordion>
+          <Modal show={this.state.showModal} onHide={close}>
+            <Modal.Header closeButton>
+              <Modal.Title>Delete Poll</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are you sure you want to delete this poll?
+            </Modal.Body>
+            <Modal.Footer>
+              <Button bsStyle="danger" onClick={this._removePoll}>Delete</Button>
+              <Button onClick={close}>Cancel</Button>
+            </Modal.Footer>
+          </Modal>
       </div>
     );
   }

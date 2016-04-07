@@ -61,4 +61,20 @@ router.post('/', async (req, res, next) => {
 });
 
 
+// Delete a poll
+router.delete('/:id', async (req, res, next) => {
+  let id = req.params.id;
+
+  try {
+    let poll = await PollModel.forge({ id }).fetch({ withRelated: [ 'choices' ] });
+    await poll.related('choices').invokeThen('destroy');
+    await poll.destroy();
+    res.send({ id });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ 'error': 'An error has occurred' });
+  }
+});
+
+
 module.exports = router;

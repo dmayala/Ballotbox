@@ -20,5 +20,21 @@ export default {
     } catch (err) {
       throw new Error(err);
     }
+  },
+
+  async removePoll(pollId) {
+    try {
+      let bearer = cookie.load('jwt');
+      let res = await fetch(`${endpoint}/${pollId}`, {
+        method: 'delete',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${bearer}`
+        }
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
   }
 }

@@ -79,16 +79,16 @@ app.post('/signup', async (req, res) => {
 // react router config
 app.use(async (req, res, next) => {
 
-  let { jwt } = req.cookies;
-  const flux = createFlux();
-
-  if (jwt) {
-    flux.getActions('login').loadUser({ token: jwt });
-  } 
-  
-  await flux.resolver.dispatchPendingActions();
-
   try {
+    let { jwt } = req.cookies;
+    const flux = createFlux();
+
+    if (jwt) {
+      flux.getActions('login').loadUser({ token: jwt });
+    } 
+
+    await flux.resolver.dispatchPendingActions();
+
     reactCookie.plugToRequest(req, res);
     const { body, title, statusCode, description } = await universalRender({ flux, location: req.url });
     return res.render('index', { title, html: body });
